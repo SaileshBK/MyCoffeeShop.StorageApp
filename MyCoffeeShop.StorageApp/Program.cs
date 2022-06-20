@@ -8,7 +8,7 @@ namespace MyCoffeeShop.StorageApp
     {
         static void Main(string[] args)
         {
-            var itemAdded = new ItemAdded(EmployeeAdded);
+            var itemAdded = new ItemAdded<Employee>(EmployeeAdded);
             //SqlRepositories of Employee instance
             var employeeRepositories = new SqlRepositories<Employee>(new StorageAppDbContext(), itemAdded);
 
@@ -25,9 +25,8 @@ namespace MyCoffeeShop.StorageApp
             Console.ReadLine();
         }
 
-        private static void EmployeeAdded(object item)
+        private static void EmployeeAdded(Employee employee)
         {
-            var employee = (Employee)item;
             Console.WriteLine($"Employee added => {employee.FirstName}");
         }
 
