@@ -6,7 +6,7 @@ using System.Linq;
 namespace MyCoffeeShop.StorageApp.Repositories
 {
     // A delegate is like a method pointer.This delegate returns void and has a contravariant generic T parameter.
-    public delegate void ItemAdded<in T>(T item);
+    public delegate void ItemAdded<T>(T item);
     public class SqlRepositories<T> : IRepositories<T> where T : class, IEntity // ,new();
     {
         // protected can still access on sub classes.
