@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyCoffeeShop.StorageApp.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace MyCoffeeShop.StorageApp.Repositories
 {
-    // A delegate is like a method pointer.This delegate returns void and has a contravariant generic T parameter.
-    public delegate void ItemAdded<T>(T item);
+    
     public class SqlRepositories<T> : IRepositories<T> where T : class, IEntity // ,new();
     {
         // protected can still access on sub classes.
@@ -18,12 +18,12 @@ namespace MyCoffeeShop.StorageApp.Repositories
 
         //}
         private readonly DbContext _dbcontext;
-        private readonly ItemAdded<T>? _itemAddedCallback;
+        private readonly Action<T>? _itemAddedCallback;
         private readonly DbSet<T> _dbSet;
 
         
 
-        public SqlRepositories(DbContext dbContext, ItemAdded<T>? itemAddedCallback = null)
+        public SqlRepositories(DbContext dbContext, Action<T>? itemAddedCallback = null)
         {
             _dbcontext = dbContext;
             _itemAddedCallback = itemAddedCallback;
