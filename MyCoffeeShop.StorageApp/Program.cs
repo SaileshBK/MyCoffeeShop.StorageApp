@@ -10,7 +10,9 @@ namespace MyCoffeeShop.StorageApp
         {
             
             //SqlRepositories of Employee instance
-            var employeeRepositories = new SqlRepositories<Employee>(new StorageAppDbContext(), EmployeeAdded);
+            var employeeRepositories = new SqlRepositories<Employee>(new StorageAppDbContext());
+                
+            employeeRepositories.ItemAdded += EmployeeRepositories_ItemAdded; ;
 
             
 
@@ -27,10 +29,12 @@ namespace MyCoffeeShop.StorageApp
             Console.ReadLine();
         }
 
-        private static void EmployeeAdded(Employee employee)
+        private static void EmployeeRepositories_ItemAdded(object? sender, Employee e)
         {
-            Console.WriteLine($"Employee added => {employee.FirstName}");
+            Console.WriteLine($"Employee added => {e.FirstName}");
         }
+
+        
 
         private static void AddManager(IWriteRepositories<Manager> managerRepositories)
         {

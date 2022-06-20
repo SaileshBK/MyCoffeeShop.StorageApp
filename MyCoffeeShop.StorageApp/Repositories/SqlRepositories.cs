@@ -18,7 +18,7 @@ namespace MyCoffeeShop.StorageApp.Repositories
 
         //}
         private readonly DbContext _dbcontext;
-        private readonly Action<T>? _itemAddedCallback;
+        
         private readonly DbSet<T> _dbSet;
 
         
@@ -26,10 +26,11 @@ namespace MyCoffeeShop.StorageApp.Repositories
         public SqlRepositories(DbContext dbContext, Action<T>? itemAddedCallback = null)
         {
             _dbcontext = dbContext;
-            _itemAddedCallback = itemAddedCallback;
             _dbSet = _dbcontext.Set<T>();
 
         }
+
+        public event EventHandler<T>? ItemAdded;
 
         public IEnumerable<T> GetAll()
         {
@@ -51,8 +52,8 @@ namespace MyCoffeeShop.StorageApp.Repositories
             //item.Id = _item.Count + 1;
             //_item.Add(item);
             _dbSet.Add(item);
-            // delegate here will Invoke the method.
-            _itemAddedCallback?.Invoke(item);
+            // delegate here will Invoke the method.we pass the sender(sql repository  instance) first then event args of type T.
+            ItemAdded?.Invoke(this, item);
         }
         public void Remove(T item)
         {
