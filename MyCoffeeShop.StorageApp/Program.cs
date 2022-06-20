@@ -8,9 +8,12 @@ namespace MyCoffeeShop.StorageApp
     {
         static void Main(string[] args)
         {
-            var itemAdded = new ItemAdded<Employee>(EmployeeAdded);
+            // itemAdded of Employee delegate.
+            ItemAdded<Employee> itemAdded = new ItemAdded<Employee>(EmployeeAdded);
             //SqlRepositories of Employee instance
             var employeeRepositories = new SqlRepositories<Employee>(new StorageAppDbContext(), itemAdded);
+
+            ItemAdded<Employee> managerAdded = itemAdded;
 
             AddEmployees(employeeRepositories);
             AddManager(employeeRepositories);
