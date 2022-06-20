@@ -5,6 +5,8 @@ using System.Linq;
 
 namespace MyCoffeeShop.StorageApp.Repositories
 {
+    // A delegate is like a method pointer.This delegate returns void and has an object parameter.
+    public delegate void ItemAdded(object item);
     public class SqlRepositories<T> : IRepositories<T> where T : class, IEntity // ,new();
     {
         // protected can still access on sub classes.
@@ -16,11 +18,15 @@ namespace MyCoffeeShop.StorageApp.Repositories
 
         //}
         private readonly DbContext _dbcontext;
+        private readonly ItemAdded? _itemAddedCallback;
         private readonly DbSet<T> _dbSet;
 
-        public SqlRepositories(DbContext dbContext)
+        
+
+        public SqlRepositories(DbContext dbContext, ItemAdded? itemAddedCallback = null)
         {
             _dbcontext = dbContext;
+            _itemAddedCallback = itemAddedCallback;
             _dbSet = _dbcontext.Set<T>();
 
         }
@@ -45,6 +51,8 @@ namespace MyCoffeeShop.StorageApp.Repositories
             //item.Id = _item.Count + 1;
             //_item.Add(item);
             _dbSet.Add(item);
+            // delegate here will Invoke the method.
+            _itemAddedCallback?.Invoke(item);
         }
         public void Remove(T item)
         {
