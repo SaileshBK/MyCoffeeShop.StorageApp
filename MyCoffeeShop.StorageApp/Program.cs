@@ -57,7 +57,8 @@ namespace MyCoffeeShop.StorageApp
             };
             //employeeRepositories.Add(new Employee { FirstName = "Sailesh" });
             //employeeRepositories.Add(new Employee { FirstName = "Pratik" });
-            AddBatch(employeeRepositories, employees);
+            //RepositoryExtension.AddBatch(employeeRepositories, employees);
+            employeeRepositories.AddBatch(employees);
         }
 
         private static void AddOrganizations(ListRepositories<Organization> organizationalRepositories)
@@ -68,7 +69,8 @@ namespace MyCoffeeShop.StorageApp
                 new Organization { Name = "Luffy" }
             };
             // This AddBatch adds arrays of organizations to repositories.
-            AddBatch(organizationalRepositories, organizations);
+            //RepositoryExtension.AddBatch(organizationalRepositories, organizations);
+            organizationalRepositories.AddBatch(organizations);
 
             //organizationalRepositories.Add(new Organization { Name = "OnePiece" });
             //organizationalRepositories.Add(new Organization { Name = "Luffy" });
@@ -76,17 +78,6 @@ namespace MyCoffeeShop.StorageApp
             
         }
 
-        // This AddBatch method allows to add arrays of employees and also organization to the repositories.
-        private static void AddBatch<T>(IWriteRepositories<T> repositories, T[] items) 
-        {                                                                                                               
-            foreach (var item in items)
-            {
-                repositories.Add(item);
-                
-
-            }
-            repositories.Save();
-
-        }
+        
     }
 }
