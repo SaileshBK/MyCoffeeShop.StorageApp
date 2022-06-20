@@ -26,7 +26,18 @@ namespace MyCoffeeShop.StorageApp
 
         private static void AddManager(IWriteRepositories<Manager> managerRepositories)
         {
-            managerRepositories.Add(new Manager { FirstName = "Nick" });
+            var NickManager = new Manager { FirstName = "Nick" };
+            var NickManagerCopy = NickManager.Copy();
+            managerRepositories.Add(NickManager);
+
+            if( NickManagerCopy is not null )
+            {
+                NickManagerCopy.FirstName += "_Copy";
+                managerRepositories.Add(NickManagerCopy);
+            }
+
+
+
             managerRepositories.Add(new Manager { FirstName = "Jeanette" });
             managerRepositories.Save();
 
